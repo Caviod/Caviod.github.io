@@ -150,6 +150,333 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-软件测试学习（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/02/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">软件测试学习（五）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/02/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-06-02T04:42:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="接口测试"><a href="#接口测试" class="headerlink" title="接口测试"></a>接口测试</h1><h2 id="一-HTTP协议"><a href="#一-HTTP协议" class="headerlink" title="一. HTTP协议"></a>一. HTTP协议</h2><p>HTTP协议：超文本传输协议，基于TCP应用层协议，用于规定客户端和服务端的传输格式，基于请求与响应模式的无状态应用层协议。研究HTTP需要从请求和响应报文来理解。<br>无状态：每个请求都与之前的请求无关。<br>*HTTP和HTTPS的区别：HTTPS在HTTP的基础上增加了数据加密。HTTPS = HTTP + SSL    </p>
+<h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><p>简单来说就是这条请求希望服务器为你做什么事情。请求报文由四部分组成：请求行，请求头，空一行，请求体。  </p>
+<h4 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h4><ol>
+<li>请求方法（Request Method）<br>GET：请求资源，输入数据长度有限制，所有数据直接在url中可见，不安全（一般用get接口从数据库中读取数据，查询比较多）。<br>POST：提交资源，输入的数据内容大小没有限制，数据不能直接看到，更安全（一般对数据库写入，修改比较多）。<br>HEAD：获取相应头。<br>PUT：替换资源。<br>DELETE：删除资源。<br>OPTION：允许客户端查看服务器性能。<br>TRACE：回显服务器收到的请求，用于测试或诊断。  </li>
+<li>URL<br>URL用于描述网上的资源。<br>URL格式：scheme：//host[：port#]/path/…/[?query-string]<br>scheme：协议，如http，https，ftp等。<br>host：域名或者IP地址。（找主机）<br>port：端口号。（找主机里资源进程运行的端口号）<br>path：资源路径。<br>query-string：发送的参数，出现在GET报文里。  <h4 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h4>HOST：主机IP地址或域名。<br>User-Agent：客户端相关信息，比如操作系统，浏览器等信息。<br>Accept：指定客户端接收信息类型，如image/jpg/json等。<br>Accept-Charset：客户端接受的字符集。<br>Accept-Encoding：可接受内容的编码。<br>Authorization：客户端提供给服务端，进行权限认证的信息，如登陆操作时服务端会给一个token令牌，之后的用户操作都需token进行操作。<br>Cookie：存放Cookie信息。<br>Referer：当前文档的URL，即从哪个链接过来的，提高安全性。<br>Content-Type：请求体内容类型。<br>Content-Length：数据长度。<br>Cache-Control：缓存机制。<br>Pragma：防止页面被缓存。</li>
+</ol>
+<p>*Cookie和Session：用户登录后，会在客户端上存放Cookie，服务端存放Session，Session是一个数据库；用户登出Cookie和Session信息都会注销。是有状态的，是一种http的存储机制。个人理解：登录时服务端给你一个Cookie，对应在服务端生成Session数据库存放会话信息，每次你的操作都要携带Cookie，服务器把你的Cookie与服务端里的Session信息比对，然后在Session里面记录你与服务器的会话状态。<br>*token：登陆后服务器会给一个token令牌给用户（可以存放在Cookie中），之后用户对服务器的请求要带上token，token是无状态的，之后的操作服务器只要通过对token的解析来验证身份，不需要从数据库中再去查数据，登出时销毁。  </p>
+<h4 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h4><p>输入各种客户端需要的其他参数。  </p>
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><p>简单来说就是服务器根据你的请求返回给你的信息。响应报文由四部分组成：状态行，消息报头，空一行，响应正文。  </p>
+<h4 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h4><p>状态码：用以表示网页服务器HTTP响应状态的三位数字代码。<br>1XX：提示信息，请求被成功接收。<br>2XX：成功，请求被成功处理。<br>3XX：重定向相关。<br>4XX：客户端错误。<br>5XX：服务器端错误。  </p>
+<h4 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h4><p>Sever：HTTP服务器的软件信息。<br>Data：响应报文的时间。<br>Expires：指定缓存过期时间。<br>Set-Cookie：设置Cookie。<br>Last-Modified：资源最后修改时间。<br>Content-Type：响应的类型和字符集。<br>Content-Length：数据长度。<br>Connection：如Keep-Alive，连接状态。<br>Location：指名重定向的位置，新的URL地址。  </p>
+<h4 id="响应正文"><a href="#响应正文" class="headerlink" title="响应正文"></a>响应正文</h4><p>服务器具体回给你的东西。  </p>
+<h2 id="二-TCP协议"><a href="#二-TCP协议" class="headerlink" title="二. TCP协议"></a>二. TCP协议</h2><p>TCP协议对应于传输层，HTTP协议对应于应用层。HTTP协议是建立在TCP协议之上的，当浏览器需要从服务器获取网页数据的时候，会发送一次http请求。HTTP会通过TCP建立起一个到服务器的连接通道，当本次请求需要的数据传输完毕后，HTTP会断开TCP连接。</p>
+<h3 id="建立TCP连接（三次握手）"><a href="#建立TCP连接（三次握手）" class="headerlink" title="建立TCP连接（三次握手）"></a>建立TCP连接（三次握手）</h3><img src="picture/TCP三次握手.png" width = 50% height = 50% div align = middle />    
+
+<p>第一次握手：建立连接时，客户端A发送SYN包（SYN=j）到服务器B，并进入SYN_SEND状态，等待服务器B确认。<br>第二次握手：服务器B收到SYN包，必须确认客户A的SYN（ACK=j+1），同时自己也发送一个SYN包（SYN=k），即SYN+ACK包，此时服务器B进入SYN_RECV状态。<br>第三次握手：客户端A收到服务器B的SYN＋ACK包，向服务器B发送确认包ACK（ACK=k+1），此包发送完毕，完成三次握手。<br>LISTEN：侦听来自远方TCP端口的连接请求。<br>SYN_SENT：发送连接后等待匹配的连接请求。<br>SYN_RECEIVED：在收到和发送一个连接请求后等待确认。<br>ESTABLISHEDL:代表打开的连接，可以传输数据。  </p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><img src="picture/TCP四次挥手.png" width = 50% height = 50% div align = middle />    
+
+<p>第一次挥手：客户端A发送一个FIN，用来关闭客户A到服务器B的数据传送。<br>第二次挥手：服务器B收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。<br>第三次挥手：服务器B关闭与客户端A的连接，发送一个FIN给客户端A。<br>第四次挥手：客户端A发回ACK报文确认，并将确认序号设置为收到序号加1。<br>FIN_WAIT1：等待远程TCP的连接中断请求。<br>FIN_WAIT2：从远程TCP等待连接中断请求。<br>CLOSE_WAIT：等待从本地用户发来的连接中断请求。<br>CLOSING：等待远程TCP对中断的确认。<br>TIME_WAIT：等待足够的时间以确保远程TCP接收到连接中断请求确认。<br>CLOSED：没有任何连接状态。  </p>
+<p>注意：三次握手和四次挥手：在TCP连接中，服务器端的SYN和ACK向客户端发送是一次性发送的，而在断开连接的过程中， B端向A端发送的ACK和FIN是分两次发送的。因为在B端接收到A端的FIN后， B端可能还有数据要传输，所以先发送ACK，等B端处理完自己的事情后就可以发送FIN断开连接了。</p>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>拥塞控制：防止过多的数据注入到网路中，这样可以使网络中的路由器或链路不至于阻塞。拥塞控制是一个全局性的过程，和流量控制不同，流量控制是点对点的控制。</p>
+<ol>
+<li>慢开始：发送方维持一个叫做拥塞窗口cwnd（congestion window）的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且动态的变化。发送方让自己的发送窗口等于拥塞窗口，另外考虑到接收方的接收能力，发送窗口可能小于拥塞窗口。思路就是：不要一开始就发送大量的数据，先试探一下网络的拥塞程度，也就是说由小到大增加拥塞窗口的大小。  </li>
+</ol>
+<p>为了防止cwnd增长过大引起网络拥塞，还需要设置一个慢开始门限ssthresh状态变量。 ssthresh的方法如下：<br>当cwnd &lt; ssthresh时，开始使用慢开始算法；当cwnd &gt; ssthresh, 改用拥塞避免算法；当cwnd = ssthresh时，慢开始与拥塞算法任意。<br> 2.拥塞避免：</p>
+<p>拥塞避免算法让拥塞窗口缓慢增长，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1，而不是加倍，这样拥塞窗口按照线性规律缓慢增长。无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是没有收到确认，虽然没有收到确认可能是其他原因的分组丢失，但是因为⽆法判定，所以都当作拥塞处理），就把慢开始门限设置为出现拥塞时的发送窗口的一半，然后把拥塞窗口设置为1，执行满开始算法。<br><img src="picture/拥塞控制.png" width = 50% height = 50% div align = middle />    </p>
+<h2 id="三-UDP协议"><a href="#三-UDP协议" class="headerlink" title="三. UDP协议"></a>三. UDP协议</h2><p>无连接协议，也称透明协议，也位于传输层。</p>
+<h3 id="TCP与UDP的区别"><a href="#TCP与UDP的区别" class="headerlink" title="TCP与UDP的区别"></a>TCP与UDP的区别</h3><ol>
+<li>TCP提供面向连接的传输，通信前要先建立连接（三次握手机制）； UDP提供无连接的传输，通信前不需要建立连接。</li>
+<li>TCP提供可靠的传输（有序，无差错，不丢失，不重复）； UDP提供不可靠的传输。</li>
+<li>TCP面向字节流的传输，因此它能将信息分割成组，并在接收端将其重组； UDP是面向数据报的传输，没有分组开销。</li>
+<li>TCP提供拥塞控制和流量控制机制； UDP不提供拥塞控制和流量控制机制。</li>
+</ol>
+<h2 id="四-接口的组成"><a href="#四-接口的组成" class="headerlink" title="四. 接口的组成"></a>四. 接口的组成</h2><ol>
+<li>URL 接口地址</li>
+<li>Method 接口类型<br>GET  输入数据长度有限制，所有数据直接在url中可见，不安全（一般用get接口从数据库中读取数据，查询比较多）<br>POST  输入的数据内容大小没有限制，数据不能直接看到，更安全（一般对数据库写入，修改比较多）  </li>
+</ol>
+<p>*json格式 {“key”:”value”,…}<br>2. Code Status 状态码<br>200 代表这个接口运行正常<br>400 接口发送的参数不正确<br>404 url输入不正确<br>405 接口类型不正确<br>500 接口有bug，内部服务器错误<br>*4开头的是客户端/前端使用的时候导致的问题<br>*5开头的是服务端/后端的问题<br>4. Request Headers 请求头<br>记录客户端的信息告诉后端<br>5. Response 返回数据<br>6. 接口参数<br>接口发送的数据<br>*postman主要用于发送http请求</p>
+<h2 id="五-接口测试注意事项"><a href="#五-接口测试注意事项" class="headerlink" title="五. 接口测试注意事项"></a>五. 接口测试注意事项</h2><p>1.需要根据具体的需求去设计接口的测试用例。<br>2.对于会写入数据库的数据，需要去数据库里看是否正常写入了。<br>3.对查询类的接口，需要去数据库里看，数据是否一致。<br>4.必须要熟悉整个系统的需求，必须要熟悉整个系统的数据库。<br>5.除了独立的每个接口的测试，我们还需要对存在业务逻辑上下关联的接口进行流程测试。  </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/02/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-软件测试学习（四）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/">软件测试学习（四）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-05-30T15:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="Python-的常用方法"><a href="#Python-的常用方法" class="headerlink" title="Python 的常用方法"></a>Python 的常用方法</h3><ol>
+<li>输入  <blockquote>
+<p>input() &nbsp; #获取字符串  </p>
+</blockquote>
+</li>
+<li>输出  <blockquote>
+<p>print()  </p>
+</blockquote>
+</li>
+<li>读取数据类型  <blockquote>
+<p>type()  </p>
+</blockquote>
+</li>
+<li>读取数据长度  <blockquote>
+<p>len()  </p>
+</blockquote>
+</li>
+<li>退出<blockquote>
+<p>exit()  </p>
+</blockquote>
+</li>
+<li>生成数列(左闭右开)  <blockquote>
+<p>range(起始值,终止值,步长)  </p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Python-的数据类型"><a href="#Python-的数据类型" class="headerlink" title="Python 的数据类型"></a>Python 的数据类型</h3><ol>
+<li>字符串 str  </li>
+<li>整数 int  </li>
+<li>小数 float  </li>
+<li>布尔值 bool  </li>
+<li>元组  tuple ()  <blockquote>
+<p>a = (,)  &nbsp; #元组的定义<br>a.index &nbsp; #查找某个值的下标<br>a.count &nbsp; #统计某个值的数量<br>a[：] &nbsp; #切片，左闭右开  </p>
+</blockquote>
+</li>
+<li>数组 list []  </li>
+</ol>
+<p>*元组一旦写好后不可修改，而数组可修改  </p>
+<blockquote>
+<p>append() &nbsp; #向数组中追加数据<br>insert(位置,插入的东西) &nbsp; #像数组中指定位置插入数据<br>extend()  &nbsp; #合并数组<br>remove() &nbsp; #删除某个值<br>b = a.pop(位置) &nbsp; #剪切数组a中的值赋给b<br>7. 字典 dict {}<br>*字典中的值没有顺序，字典的接口必须是键值对的结构{key：value}<br>a[key] &nbsp; #取值<br>a[key] = value &nbsp; #若原来没有则新增，原来有则修改<br>get(key) &nbsp; #在字典中取东西<br>del &nbsp; #删除  </p>
+</blockquote>
+<h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><ol>
+<li>in：判断是否在这个数组/字典/元组内   </li>
+<li>is：判断数据类型  </li>
+</ol>
+<blockquote>
+<p>for 判断:<br> &nbsp;  &nbsp;  &nbsp;  &nbsp; 执行语句1<br>elif:<br> &nbsp;  &nbsp;  &nbsp;  &nbsp; 执行语句2<br>else:<br> &nbsp;  &nbsp;  &nbsp;  &nbsp; 执行语句3   </p>
+</blockquote>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><ol>
+<li><p>while  </p>
+<blockquote>
+<p>while 判断条件:<br> &nbsp;  &nbsp;  &nbsp;  &nbsp; 执行语句1   </p>
+</blockquote>
+</li>
+<li><p>for 起遍历效果  </p>
+<blockquote>
+<p>for i in range(100)：  </p>
+</blockquote>
+</li>
+<li><p>跳出  </p>
+<blockquote>
+<p>continue &nbsp; &nbsp; #跳出这一次循环<br>break &nbsp;  &nbsp;  &nbsp;  &nbsp;  #跳出整个循环     </p>
+</blockquote>
+</li>
+</ol>
+<h3 id="异常捕获"><a href="#异常捕获" class="headerlink" title="异常捕获"></a>异常捕获</h3><blockquote>
+<p>try: &lt;代码段1&gt;<br>except: &lt;代码段2&gt;<br>如果&lt;代码段1&gt;错误则会运行&lt;代码段2&gt;,否则则不会。<br>异常类：Exception</p>
+</blockquote>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>包-&gt;类-&gt;函数-&gt;变量  </p>
+<ol>
+<li><p>包的导入  </p>
+<blockquote>
+<p>import</p>
+</blockquote>
+</li>
+<li><p>第三方的包</p>
+<blockquote>
+<p>pip install/uninstall 包名<br>pip list  </p>
+</blockquote>
+</li>
+<li><p>类  </p>
+<img src="picture/python类的定义.png" width = 50% height = 50% div align = middle />      </li>
+</ol>
+<p>*类名必须大写，第一个参数必须是self  </p>
+<h3 id="Python常用方法"><a href="#Python常用方法" class="headerlink" title="Python常用方法"></a>Python常用方法</h3><ol>
+<li>文件的读写<br>\t  &nbsp;  &nbsp;  &nbsp;  &nbsp;空格的效果<br>\n  &nbsp;  &nbsp;  &nbsp;  &nbsp;换行的效果</li>
+</ol>
+<p>open() &nbsp;  &nbsp;  &nbsp;  &nbsp;打开文档</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-软件测试学习（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">软件测试学习（三）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-05-30T05:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h2><h3 id="MySQL的安装"><a href="#MySQL的安装" class="headerlink" title="MySQL的安装"></a>MySQL的安装</h3><ol>
+<li>安装命令  <blockquote>
+<p>mysqld -install  </p>
+</blockquote>
+</li>
+<li>初始化  <blockquote>
+<p>mysqld –initialize-insecure  </p>
+</blockquote>
+</li>
+<li>启动数据库  <blockquote>
+<p>net start mysql  </p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-软件测试学习（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
